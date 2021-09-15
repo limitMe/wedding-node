@@ -15,10 +15,11 @@ export default class Token {
     forCharacter: number;
 
     @Column({
-      length: constant.threeChinese
+      length: constant.threeChinese,
+      default: ''
     })
     usedBy: string;
 
-    @Column()
+    @Column({ default: 0 })
     usedTimestamp: number;
 }

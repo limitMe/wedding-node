@@ -1,9 +1,14 @@
-import { getAllAction } from './controller/home';
+import { getAllAction, createAction } from './controller/home';
 
 export default [
   {
-    path: '/',
+    path: '/all',
     method: 'get',
     action: getAllAction
+  },
+  {
+    path: '/new',
+    method: 'get',
+    action: createAction
   }
 ];

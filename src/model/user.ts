@@ -30,39 +30,42 @@ export default class User {
     character3: string;
 
     @Column({
-      length: constant.threeChinese
+      length: constant.threeChinese,
+      default: ''
     })
     pair: string;
 
     // Pair's character revealed
-    @Column()
+    @Column({ default: false })
     character1Revealed: boolean;
 
-    @Column()
+    @Column({ default: false })
     character2Revealed: boolean;
 
-    @Column()
+    @Column({ default: false })
     character3Revealed: boolean;
 
     @Column({
-      length: constant.threeChinese
+      length: constant.threeChinese,
+      default: ''
     })
     answer1: string;
 
     @Column({
-      length: constant.threeChinese
+      length: constant.threeChinese,
+      default: ''
     })
     answer2: string;
 
-    @Column()
+    @Column({ default: 0 })
     silverNum: number;
 
-    @Column()
+    @Column({ default: 0 })
     silverTimestamp: number;
 
-    @Column()
+    @Column({ default: 0})
     goldenNum: number;
 
-    @Column()
+    @Column({ default: 0 })
     goldenTimestamp: number;
 }
