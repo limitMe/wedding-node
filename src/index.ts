@@ -2,18 +2,28 @@ import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
 import 'reflect-metadata';
+import { createConnection } from "typeorm";
 import { PORT } from './config';
 import AppRoutes from './routes';
 
-const app = new Koa();
-const router = new Router();
+// create connection with database
+// note that its not active database connection
+// TypeORM creates you connection pull to uses connections from pull on your requests
+createConnection().then(async connection => {
 
-//路由
-AppRoutes.forEach(route => router[route.method](route.path, route.action));
+  // create koa app
+  const app = new Koa();
+  const router = new Router();
 
-app.use(bodyParser());
-app.use(router.routes());
-app.use(router.allowedMethods());
-app.listen(PORT);
+  //路由
+  AppRoutes.forEach(route => router[route.method](route.path, route.action));
 
-console.log(`应用启动成功 端口:${PORT}`);
+  app.use(bodyParser());
+  app.use(router.routes());
+  app.use(router.allowedMethods());
+  app.listen(PORT);
+
+  console.log(`应用启动成功 端口:${PORT}`);
+}).catch(error => console.log("TypeORM connection error: ", error));
+
+

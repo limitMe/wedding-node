@@ -1,9 +1,9 @@
-import homeController from './controller/home-controller';
+import { getAllAction } from './controller/home';
 
 export default [
   {
     path: '/',
     method: 'get',
-    action: homeController.hello
+    action: getAllAction
   }
 ];
