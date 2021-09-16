@@ -9,7 +9,8 @@ export default class User {
     name: string;
 
     @Column({
-      length: constant.threeChinese
+      length: constant.threeChinese,
+      default: ''
     })
     constellation: string;
 
@@ -36,7 +37,7 @@ export default class User {
     pair: string;
 
     // Pair's character revealed
-    @Column({ default: false })
+    @Column({ default: true })
     character1Revealed: boolean;
 
     @Column({ default: false })
