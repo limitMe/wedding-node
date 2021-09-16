@@ -10,8 +10,20 @@ const Excel = require('exceljs');
 export async function init(context: Context) {
   //TODO: check permission!
 
-  const tokenRepository = getManager().getRepository(Token);
   const userRepository = getManager().getRepository(User);
+  const tokenRepository = getManager().getRepository(Token);
+
+  console.log('Deleting old users');
+  const allUsers = await userRepository.find();
+  for await (const user of allUsers) {
+    userRepository.delete(user);
+  }
+  console.log('Deleting old tokens');
+  const allTokens = await tokenRepository.find();
+  for await (const token of allTokens) {
+    tokenRepository.delete(token);
+  }
+  console.log('All deleted');
 
   let tokenInserted = 1;
   let userInserted = 1;
@@ -66,7 +78,7 @@ export async function init(context: Context) {
  */
 export async function reset(context: Context) {
   //TODO: check permission!
-  
+
   const userRepository = getManager().getRepository(User);
   const tokenRepository = getManager().getRepository(Token);
 
