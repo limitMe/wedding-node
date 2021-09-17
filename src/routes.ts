@@ -1,5 +1,6 @@
 import { main, answer, activateToken } from './controller/home';
 import { init, reset } from './controller/super';
+import { admin, turnOn, turnOff } from './controller/admin';
 
 export default [
   {
@@ -26,5 +27,20 @@ export default [
     path: '/super/reset',
     method: 'post',
     action: reset
+  },
+  {
+    path: '/admin',
+    method: 'post',
+    action: admin
+  },
+  {
+    path: '/admin/turnon',
+    method: 'post',
+    action: turnOn
+  },
+  {
+    path: '/admin/turnoff',
+    method: 'post',
+    action: turnOff
   },
 ];

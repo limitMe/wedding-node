@@ -1,8 +1,8 @@
 import { Context } from "koa";
 import { getManager } from "typeorm";
+const Excel = require('exceljs');
 import User from "../model/user";
 import Token from "../model/token";
-const Excel = require('exceljs');
 
 /**
  * Init

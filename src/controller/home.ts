@@ -31,6 +31,15 @@ export async function answer(ctx: Context) {
   let result: any = {
     success: false
   };
+  //@ts-ignore
+  if (ctx.app.gameOn !== true) {
+    result = {
+      ...result,
+      message: '游戏尚未开始或者已经结束'
+    };
+    ctx.body = result;
+    return;
+  }
   const newAnswer = ctx.request.body.answer ?? '';
   const currentUser: User = ctx.currentUser;
   const answeredOnce = currentUser.answer1 !== '';
@@ -96,6 +105,16 @@ export async function activateToken(ctx: Context) {
   let result: any = {
     success: false
   };
+
+  //@ts-ignore
+  if (ctx.app.gameOn !== true) {
+    result = {
+      ...result,
+      message: '游戏尚未开始或者已经结束'
+    };
+    ctx.body = result;
+    return;
+  }
 
   const currentUser: User = ctx.currentUser;
   const userRepository = getManager().getRepository(User);

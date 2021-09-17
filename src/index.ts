@@ -1,11 +1,13 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
+
 import 'reflect-metadata';
-import { createConnection } from "typeorm";
+import { createConnection, getManager } from "typeorm";
 import { PORT } from './config';
 import AppRoutes from './routes';
 import { auth } from './middleware/auth';
+import Setting from './model/setting';
 
 // create connection with database
 // note that its not active database connection
@@ -15,6 +17,16 @@ createConnection().then(async connection => {
   // create koa app
   const app = new Koa();
   const router = new Router();
+
+  const settingRepository = getManager().getRepository(Setting);
+  const onlySetting: Setting = await settingRepository.findOne({id: 1});
+  if (onlySetting === undefined) {
+    const newSetting = settingRepository.create();
+    newSetting.gameOn = true;
+    settingRepository.save(newSetting);
+  }
+  // @ts-ignore
+  app.gameOn = onlySetting ? onlySetting.gameOn: true;
 
   app.use(auth);
 
