@@ -18,6 +18,10 @@ export async function auth(ctx: Context, next: Next) {
     ctx.superMode = true;
     await next();
     return;
+  } else if (authHeader === 'admin') {
+    ctx.adminMode = true;
+    await next();
+    return;
   }
 
   const authStrings = authHeader.split('-');

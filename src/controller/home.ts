@@ -74,7 +74,7 @@ export async function answer(ctx: Context) {
     return;
   }
   
-  const [_, currentGoldenNum] = await userRepository.findAndCount({where: { goldenNum: Not(0)}});
+  const [, currentGoldenNum] = await userRepository.findAndCount({where: { goldenNum: Not(0)}});
   if (answeredOnce) {
     currentUser.answer2 = newAnswer;
   } else {
@@ -140,6 +140,15 @@ export async function activateToken(ctx: Context) {
     case 3: currentUser.character3Revealed = true; break;
     default: break;
   }
+
+  if (currentUser.character1Revealed &&
+      currentUser.character2Revealed &&
+      currentUser.character3Revealed) {
+        const [, currentSilverNum] = await userRepository.findAndCount({where: { SilverNum: Not(0)}});
+        currentUser.silverNum = currentSilverNum + 1;
+        currentUser.silverTimestamp = Date.now();
+      }
+
   userRepository.save(currentUser); // async
   tokenRepository.save(tokenResult); // async
 

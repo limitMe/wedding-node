@@ -19,12 +19,12 @@ export default [
   },
   {
     path: '/super/init',
-    method: 'get',
+    method: 'post',
     action: init
   },
   {
     path: '/super/reset',
-    method: 'get',
+    method: 'post',
     action: reset
   },
 ];

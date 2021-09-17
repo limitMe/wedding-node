@@ -1,5 +1,5 @@
-import {Context} from "koa";
-import {getManager} from "typeorm";
+import { Context } from "koa";
+import { getManager } from "typeorm";
 import User from "../model/user";
 import Token from "../model/token";
 const Excel = require('exceljs');
