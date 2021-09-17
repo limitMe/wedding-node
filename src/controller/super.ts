@@ -62,7 +62,7 @@ export async function init(ctx: Context) {
         if (row.values[1] !== undefined && !isNaN(row.values[2])){
           console.log(`${tokenInserted} token inserting: %j`, row.values);
           const newToken = tokenRepository.create();
-          newToken.token = row.values[1].replaceAll(/[，,。;\.\s]/g, '');
+          newToken.token = row.values[1].replace(/[，,。;\.\s]/g, '');
           newToken.forCharacter = row.values[2];
           await tokenRepository.save(newToken);
           tokenInserted += 1;
@@ -103,8 +103,8 @@ export async function reset(ctx: Context) {
   for await (const user of allUsers) {
     console.log(`${userUpdated}: Updating ${user.name}`)
     user.character1Revealed = true;
-    user.character1Revealed = false;
-    user.character1Revealed = false;
+    user.character2Revealed = false;
+    user.character3Revealed = false;
     user.answer1 = '';
     user.answer2 = '';
     user.goldenNum = 0;

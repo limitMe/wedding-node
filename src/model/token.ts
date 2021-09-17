@@ -20,6 +20,6 @@ export default class Token {
     })
     usedBy: string;
 
-    @Column({ default: 0 })
+    @Column({ default: 0, type: 'bigint' })
     usedTimestamp: number;
 }

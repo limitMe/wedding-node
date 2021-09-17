@@ -14,7 +14,7 @@ export async function auth(ctx: Context, next: Next) {
     return
   }
 
-  if (authHeader === 'superidolsmile') {
+  if (authHeader === 'super') {
     ctx.superMode = true;
     await next();
     return;
@@ -30,6 +30,7 @@ export async function auth(ctx: Context, next: Next) {
   }
   
   const authResult = await userRepository.findOne({ name: authStrings[0], constellation: authStrings[1] });
+  let currentUser;
   if (authResult === undefined) {
     const waitAuthResult = await userRepository.findOne({ name: authStrings[0], constellation: ''});
     if (waitAuthResult === undefined) {
@@ -40,8 +41,11 @@ export async function auth(ctx: Context, next: Next) {
       return
     } else {
       waitAuthResult.constellation = authStrings[1];
+      currentUser = waitAuthResult;
       userRepository.save(waitAuthResult); // no need for await
     }
   }
+  currentUser = authResult;
+  ctx.currentUser = currentUser;
   await next();
 }

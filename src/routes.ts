@@ -1,21 +1,21 @@
-import { getAllAction, createAction, test } from './controller/home';
+import { main, answer, activateToken } from './controller/home';
 import { init, reset } from './controller/super';
 
 export default [
   {
-    path: '/test',
-    method: 'get',
-    action: test
+    path: '/answer',
+    method: 'post',
+    action: answer
   },
   {
-    path: '/all',
-    method: 'get',
-    action: getAllAction
+    path: '/activateToken',
+    method: 'post',
+    action: activateToken
   },
   {
-    path: '/new',
+    path: '/',
     method: 'get',
-    action: createAction
+    action: main
   },
   {
     path: '/super/init',

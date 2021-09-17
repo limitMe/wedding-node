@@ -61,12 +61,12 @@ export default class User {
     @Column({ default: 0 })
     silverNum: number;
 
-    @Column({ default: 0 })
+    @Column({ default: 0, type: 'bigint' })
     silverTimestamp: number;
 
     @Column({ default: 0})
     goldenNum: number;
 
-    @Column({ default: 0 })
+    @Column({ default: 0, type: 'bigint' })
     goldenTimestamp: number;
 }
