@@ -5,6 +5,7 @@ import 'reflect-metadata';
 import { createConnection } from "typeorm";
 import { PORT } from './config';
 import AppRoutes from './routes';
+import { auth } from './middleware/auth';
 
 // create connection with database
 // note that its not active database connection
@@ -14,6 +15,8 @@ createConnection().then(async connection => {
   // create koa app
   const app = new Koa();
   const router = new Router();
+
+  app.use(auth);
 
   //路由
   AppRoutes.forEach(route => router[route.method](route.path, route.action));

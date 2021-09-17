@@ -5,18 +5,18 @@ import User from "../model/user";
 /**
  * Loads all users from the database.
  */
-export async function getAllAction(context: Context) {
+export async function getAllAction(ctx: Context) {
   const userRepository = getManager().getRepository(User);
 
   const users = await userRepository.find();
 
-  context.body = users;
+  ctx.body = users;
 }
 
 /**
  * Create a user to the database.
  */
-export async function createAction(context: Context) {
+export async function createAction(ctx: Context) {
   const userRepository = getManager().getRepository(User);
 
   const newUser = userRepository.create();
@@ -30,5 +30,11 @@ export async function createAction(context: Context) {
 
   await userRepository.save(newUser);
 
-  context.body = newUser;
+  ctx.body = newUser;
+}
+
+export async function test(ctx: Context) {
+  ctx.body = {
+    request: ctx.request
+  };
 }

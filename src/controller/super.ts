@@ -7,8 +7,14 @@ const Excel = require('exceljs');
 /**
  * Init
  */
-export async function init(context: Context) {
-  //TODO: check permission!
+export async function init(ctx: Context) {
+  if (ctx.superMode !== true) {
+    ctx.body = {
+      success: false,
+      code: 402
+    }
+    return
+  }
 
   const userRepository = getManager().getRepository(User);
   const tokenRepository = getManager().getRepository(Token);
@@ -70,20 +76,28 @@ export async function init(context: Context) {
     tokenInserted: tokenInserted - 1
   }
 
-  context.body = result;
+  ctx.body = result;
 }
 
 /**
  * Reset
  */
-export async function reset(context: Context) {
-  //TODO: check permission!
+export async function reset(ctx: Context) {
+  if (ctx.superMode !== true) {
+    ctx.body = {
+      success: false,
+      code: 402
+    }
+    return
+  }
 
   const userRepository = getManager().getRepository(User);
   const tokenRepository = getManager().getRepository(Token);
 
   let tokenUpdated = 1;
   let userUpdated = 1;
+
+  console.log('Starting reset. Note reset would affect users constellation!');
 
   const allUsers = await userRepository.find();
   for await (const user of allUsers) {
@@ -115,5 +129,5 @@ export async function reset(context: Context) {
     tokenUpdated: tokenUpdated - 1
   }
 
-  context.body = result;
+  ctx.body = result;
 }

@@ -1,7 +1,12 @@
-import { getAllAction, createAction } from './controller/home';
+import { getAllAction, createAction, test } from './controller/home';
 import { init, reset } from './controller/super';
 
 export default [
+  {
+    path: '/test',
+    method: 'get',
+    action: test
+  },
   {
     path: '/all',
     method: 'get',
