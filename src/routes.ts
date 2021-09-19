@@ -30,7 +30,7 @@ export default [
   },
   {
     path: '/admin',
-    method: 'post',
+    method: 'get',
     action: admin
   },
   {

@@ -1,7 +1,7 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
-
+const cors = require('@koa/cors');
 import 'reflect-metadata';
 import { createConnection, getManager } from "typeorm";
 import { PORT } from './config';
@@ -28,6 +28,7 @@ createConnection().then(async connection => {
   // @ts-ignore
   app.gameOn = onlySetting ? onlySetting.gameOn: true;
 
+  app.use(cors());
   app.use(auth);
 
   //路由

@@ -89,7 +89,7 @@ export async function answer(ctx: Context) {
   } else {
     currentUser.answer1 = newAnswer;
   }
-  currentUser.goldenNum = currentGoldenNum + 1;
+  currentUser.goldenNum = (currentGoldenNum ?? 0) + 1;
   currentUser.goldenTimestamp = Date.now();
   userRepository.save(currentUser); // async
   result = {
@@ -163,8 +163,8 @@ export async function activateToken(ctx: Context) {
   if (currentUser.character1Revealed &&
       currentUser.character2Revealed &&
       currentUser.character3Revealed) {
-        const [, currentSilverNum] = await userRepository.findAndCount({where: { SilverNum: Not(0)}});
-        currentUser.silverNum = currentSilverNum + 1;
+        const [, currentSilverNum] = await userRepository.findAndCount({where: { silverNum: Not(0)}});
+        currentUser.silverNum = (currentSilverNum ?? 0) + 1;
         currentUser.silverTimestamp = Date.now();
       }
 

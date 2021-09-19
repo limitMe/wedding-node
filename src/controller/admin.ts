@@ -51,6 +51,7 @@ export async function admin(ctx: Context) {
         character3Revealed: guest.character3Revealed,
         progress: Number(guest.character2Revealed) + Number(guest.character3Revealed)
       }})
+    .sort((a, b) => a.name.localeCompare(b.name, 'zh'))
     .sort((a, b) => b.progress - a.progress)
 
     const tokenRepository = getManager().getRepository(Token);

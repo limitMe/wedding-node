@@ -4,7 +4,6 @@ import User from "../model/user";
 
 export async function auth(ctx: Context, next: Next) {
   const userRepository = getManager().getRepository(User);
-  
   const authHeader = decodeURI(ctx.request.header['authorization']);
   if (authHeader === undefined) {
     ctx.body = {
