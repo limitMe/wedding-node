@@ -184,7 +184,7 @@ export async function allNames(ctx: Context) {
   const allUsers = await userRepository.find();
   const result = allUsers.map(user => {
     return user.name
-  })
+  }).sort((a, b) => a.localeCompare(b, 'zh'))
   ctx.body = {
     success: true,
     data: result
