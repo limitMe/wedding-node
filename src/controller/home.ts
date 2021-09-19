@@ -178,3 +178,15 @@ export async function activateToken(ctx: Context) {
   }
   ctx.body = result;  
 }
+
+export async function allNames(ctx: Context) {
+  const userRepository = getManager().getRepository(User);
+  const allUsers = await userRepository.find();
+  const result = allUsers.map(user => {
+    return user.name
+  })
+  ctx.body = {
+    success: true,
+    data: result
+  }
+}

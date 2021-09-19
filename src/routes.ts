@@ -1,4 +1,4 @@
-import { main, answer, activateToken } from './controller/home';
+import { main, answer, activateToken, allNames } from './controller/home';
 import { init, reset } from './controller/super';
 import { admin, turnOn, turnOff } from './controller/admin';
 
@@ -12,6 +12,11 @@ export default [
     path: '/activateToken',
     method: 'post',
     action: activateToken
+  },
+  {
+    path: '/allNames',
+    method: 'get',
+    action: allNames
   },
   {
     path: '/',

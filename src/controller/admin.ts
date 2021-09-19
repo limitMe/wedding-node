@@ -95,4 +95,11 @@ async function setGameOn(ctx: Context, isOn: boolean) {
     onlySetting.gameOn = isOn;
     settingRepository.save(onlySetting);
   }
+
+  const userRepository = getManager().getRepository(User);
+  const allUsers = await userRepository.find();
+  for await (const user of allUsers) {
+    user.character1Revealed = isOn;
+    userRepository.save(user);
+  }
 }
