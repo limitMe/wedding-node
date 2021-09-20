@@ -3,6 +3,7 @@ import { getManager } from "typeorm";
 const Excel = require('exceljs');
 import User from "../model/user";
 import Token from "../model/token";
+import { allNames } from "./home";
 
 /**
  * Init
@@ -77,6 +78,48 @@ export async function init(ctx: Context) {
   }
 
   ctx.body = result;
+}
+
+export async function pair(ctx: Context) {
+  if (ctx.superMode !== true) {
+    ctx.body = {
+      success: false,
+      code: 402
+    }
+    return
+  }
+
+  const userRepository = getManager().getRepository(User);
+  const allUsers = await userRepository.find();
+  let allUserNames = allUsers.map(user => user.name);
+  for (let user of allUsers) {
+    if (user.pair === '') {
+      const namesCount = allUserNames.length;
+      const selfIndex = allUserNames.indexOf(user.name);
+      const randomIndex = Math.floor(Math.random() * namesCount);
+      let pairIndex = -1;
+
+      if (randomIndex !== selfIndex && allUserNames[randomIndex]) {
+        pairIndex = randomIndex;
+      } else if (randomIndex*100%namesCount !== selfIndex && allUserNames[randomIndex*100%namesCount]) {
+        pairIndex = randomIndex*100%namesCount;
+      }
+
+      if (pairIndex < 0) {
+        console.log('走到兜底逻辑')
+        const userIndex = allUsers.indexOf(user);
+        const userCount = allUsers.length;
+        user.pair = allUsers[(userIndex + 12)% userCount].name;
+      } else {
+        user.pair = allUserNames[pairIndex];
+        allUserNames = allUserNames.filter((name, index) => index !== pairIndex);
+      }
+
+      userRepository.save(user);
+    }
+  }
+
+  ctx.body = 'Done';
 }
 
 /**
