@@ -51,6 +51,7 @@ export async function admin(ctx: Context) {
         character3Revealed: guest.character3Revealed,
         progress: Number(guest.character2Revealed) + Number(guest.character3Revealed)
       }})
+    .sort((a, b) => a.name.localeCompare(b.name, 'zh'))
     .sort((a, b) => b.progress - a.progress)
 
     const tokenRepository = getManager().getRepository(Token);
@@ -93,5 +94,12 @@ async function setGameOn(ctx: Context, isOn: boolean) {
   } else {
     onlySetting.gameOn = isOn;
     settingRepository.save(onlySetting);
+  }
+
+  const userRepository = getManager().getRepository(User);
+  const allUsers = await userRepository.find();
+  for await (const user of allUsers) {
+    user.character1Revealed = isOn;
+    userRepository.save(user);
   }
 }

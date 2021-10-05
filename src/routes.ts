@@ -1,5 +1,5 @@
-import { main, answer, activateToken } from './controller/home';
-import { init, reset } from './controller/super';
+import { main, answer, activateToken, allNames } from './controller/home';
+import { init, reset, pair } from './controller/super';
 import { admin, turnOn, turnOff } from './controller/admin';
 
 export default [
@@ -12,6 +12,11 @@ export default [
     path: '/activateToken',
     method: 'post',
     action: activateToken
+  },
+  {
+    path: '/allNames',
+    method: 'get',
+    action: allNames
   },
   {
     path: '/',
@@ -29,8 +34,13 @@ export default [
     action: reset
   },
   {
-    path: '/admin',
+    path: '/super/pair',
     method: 'post',
+    action: pair
+  },
+  {
+    path: '/admin',
+    method: 'get',
     action: admin
   },
   {

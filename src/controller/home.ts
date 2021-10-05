@@ -97,7 +97,7 @@ export async function answer(ctx: Context) {
   } else {
     currentUser.answer1 = newAnswer;
   }
-  currentUser.goldenNum = currentGoldenNum + 1;
+  currentUser.goldenNum = (currentGoldenNum ?? 0) + 1;
   currentUser.goldenTimestamp = Date.now();
   userRepository.save(currentUser); // async
   result = {
@@ -171,8 +171,8 @@ export async function activateToken(ctx: Context) {
   if (currentUser.character1Revealed &&
       currentUser.character2Revealed &&
       currentUser.character3Revealed) {
-        const [, currentSilverNum] = await userRepository.findAndCount({where: { SilverNum: Not(0)}});
-        currentUser.silverNum = currentSilverNum + 1;
+        const [, currentSilverNum] = await userRepository.findAndCount({where: { silverNum: Not(0)}});
+        currentUser.silverNum = (currentSilverNum ?? 0) + 1;
         currentUser.silverTimestamp = Date.now();
       }
 
@@ -185,4 +185,16 @@ export async function activateToken(ctx: Context) {
     message: '解锁新线索'
   }
   ctx.body = result;  
+}
+
+export async function allNames(ctx: Context) {
+  const userRepository = getManager().getRepository(User);
+  const allUsers = await userRepository.find();
+  const result = allUsers.map(user => {
+    return user.name
+  }).sort((a, b) => a.localeCompare(b, 'zh'))
+  ctx.body = {
+    success: true,
+    data: result
+  }
 }
