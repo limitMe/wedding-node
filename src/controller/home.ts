@@ -41,6 +41,14 @@ export async function answer(ctx: Context) {
     return;
   }
   const newAnswer = ctx.request.body.answer ?? '';
+  if (newAnswer.length > 3) {
+    result = {
+      ...result,
+      message: '答案最多限3个汉字'
+    };
+    ctx.body = result;
+    return;
+  }
   const currentUser: User = ctx.currentUser;
   const answeredOnce = currentUser.answer1 !== '';
 
