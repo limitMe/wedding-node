@@ -3,7 +3,6 @@ import { getManager, Not } from "typeorm";
 import User from "../model/user";
 import Token from "../model/token";
 import Setting from '../model/setting';
-import { setgid } from "process";
 
 export async function admin(ctx: Context) {
   if (ctx.adminMode !== true) {

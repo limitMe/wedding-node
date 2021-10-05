@@ -3,7 +3,6 @@ import { getManager } from "typeorm";
 const Excel = require('exceljs');
 import User from "../model/user";
 import Token from "../model/token";
-import { allNames } from "./home";
 
 /**
  * Init

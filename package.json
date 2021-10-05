@@ -1,7 +1,7 @@
 {
-  "name": "ts-koa-starter",
+  "name": "desmond-wedding-node",
   "version": "1.0.0",
-  "description": "一个简单的koa+typescript+typeorm的起手式",
+  "description": "Backend for Desmond's wedding game",
   "tags": [
     "orm",
     "typescript",

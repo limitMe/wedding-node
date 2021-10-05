@@ -1,7 +1,8 @@
-import {Context} from "koa";
-import {getManager, Not} from "typeorm";
+import { Context } from "koa";
+import { getManager, Not } from "typeorm";
 import User from "../model/user";
 import Token from '../model/token';
+import * as constant from '../constant';
 
 export async function main(ctx: Context) {
   let result: any = {
@@ -41,7 +42,7 @@ export async function answer(ctx: Context) {
     return;
   }
   const newAnswer = ctx.request.body.answer ?? '';
-  if (newAnswer.length > 3) {
+  if (newAnswer.length > constant.threeChinese) {
     result = {
       ...result,
       message: '答案最多限3个汉字'
